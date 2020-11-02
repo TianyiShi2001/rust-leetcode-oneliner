@@ -40,6 +40,36 @@ pub fn plus_one(digits: Vec<i32>) -> Vec<i32> {
 }
 ```
 
+### [271. Contains Duplicate](https://leetcode.com/problems/contains-duplicate/)
+
+```rust
+pub fn contains_duplicate(nums: Vec<i32>) -> bool {
+    nums.into_iter()
+        .fold(std::collections::HashMap::new(), |mut map, num| {
+            let count = map.entry(num).or_insert(0usize);
+            *count += 1;
+            map
+        })
+        .values()
+        .any(|&count| count > 1)
+}
+```
+
+```rust
+pub fn contains_duplicate(nums: Vec<i32>) -> bool {
+    nums
+        .into_iter()
+        .try_fold(std::collections::HashSet::new(), |mut set, num| {
+            if set.contains(&num) {
+                return None;
+            } else {
+                set.insert(num);
+                Some(set)
+            }
+        })
+        .is_none()
+```
+
 ### [884. Uncommon Words from Two Sentences](https://leetcode.com/problems/uncommon-words-from-two-sentences/)
 
 ```rust
