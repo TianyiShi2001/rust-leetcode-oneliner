@@ -4,11 +4,22 @@ My one-liner solutions to leetcode problems by only chaining methods provided by
 
 These solutions aren't necessarily efficient, but they are fun! They also serve as good demonstrations of the use of rust iterators.
 
+## TOC
+- [TOC](#toc)
+- [Oneliners](#oneliners)
+  - [66. Plus One](#66-plus-one)
+  - [*147. Insertion Sort List](#147-insertion-sort-list)
+  - [271. Contains Duplicate](#271-contains-duplicate)
+  - [884. Uncommon Words from Two Sentences](#884-uncommon-words-from-two-sentences)
+- [Implementing `Iterator` (not really one-liner)](#implementing-iterator-not-really-one-liner)
+  - [17. Letter Combinations of a Phone Number](#17-letter-combinations-of-a-phone-number)
+  - [885. Spiral Matrix III](#885-spiral-matrix-iii)
+
+## Oneliners
 
 ### [66. Plus One](https://leetcode.com/problems/plus-one/)
 
 ```rust
-
 pub fn plus_one(digits: Vec<i32>) -> Vec<i32> {
     digits
         .iter()
