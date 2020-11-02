@@ -1,6 +1,6 @@
 # rust-leetcode-oneliner
 
-My one-liner solutions to leetcode problems using iterators.
+My one-liner solutions to leetcode problems by only chaining methods provided by the `Iterator` trait.
 
 These solutions aren't necessarily efficient, but they are fun! They also serve as good demonstrations of the use of rust iterators.
 
@@ -110,6 +110,84 @@ pub fn uncommon_from_sentences(a: String, b: String) -> Vec<String> {
             }
             v
         })
+}
+```
+
+## Implementing `Iterator` (not really one-liner)
+
+### [17. Letter Combinations of a Phone Number](https://leetcode.com/problems/letter-combinations-of-a-phone-number/)
+
+```rust
+pub fn letter_combinations(digits: String) -> Vec<String> {
+    Generator::new(digits).collect()
+}
+
+struct Generator {
+    letters: Vec<Vec<char>>,
+    total_lengths: Vec<usize>,
+    states: Vec<usize>,
+    finished: bool,
+}
+
+impl Generator {
+    fn new(inp: String) -> Self {
+        let letters: Vec<Vec<char>> = inp
+            .chars()
+            .map(|d| match d {
+                '2' => vec!['a', 'b', 'c'],
+                '3' => vec!['d', 'e', 'f'],
+                '4' => vec!['g', 'h', 'i'],
+                '5' => vec!['j', 'k', 'l'],
+                '6' => vec!['m', 'n', 'o'],
+                '7' => vec!['p', 'q', 'r', 's'],
+                '8' => vec!['t', 'u', 'v'],
+                '9' => vec!['w', 'x', 'y', 'z'],
+                _ => unreachable!(),
+            })
+            .collect();
+        let total_lengths = letters.iter().map(|x| x.len() - 1).collect();
+        Self {
+            letters,
+            total_lengths,
+            states: vec![0; inp.len()],
+            finished: inp.len() == 0,
+        }
+    }
+}
+
+impl Iterator for Generator {
+    type Item = String;
+    fn next(&mut self) -> Option<Self::Item> {
+        if self.finished {
+            None
+        } else {
+            let res = self.letters.iter().zip(self.states.iter()).fold(
+                String::new(),
+                |mut s, (chars, &idx)| {
+                    s.push(chars[idx]);
+                    s
+                },
+            );
+            if let Err(pos) = self
+                .states
+                .iter_mut()
+                .zip(self.total_lengths.iter())
+                .try_fold(0usize, |pos, (idx, total)| {
+                    if *idx < *total {
+                        *idx += 1;
+                        Err(pos)
+                    } else {
+                        Ok(pos + 1)
+                    }
+                })
+            {
+                self.states.iter_mut().take(pos).for_each(|x| *x = 0);
+            } else {
+                self.finished = true;
+            }
+            Some(res)
+        }
+    }
 }
 ```
 
