@@ -77,6 +77,12 @@ pub fn insertion_sort_list(head: Option<Box<ListNode>>) -> Option<Box<ListNode>>
 
 ```rust
 pub fn contains_duplicate(nums: Vec<i32>) -> bool {
+    nums.iter().collect::<std::collections::HashSet<_>>().len() != nums.len()
+}
+```
+
+```rust
+pub fn contains_duplicate(nums: Vec<i32>) -> bool {
     nums.into_iter()
         .fold(std::collections::HashMap::new(), |mut map, num| {
             let count = map.entry(num).or_insert(0usize);
