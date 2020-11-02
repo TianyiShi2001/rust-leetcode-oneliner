@@ -40,6 +40,28 @@ pub fn plus_one(digits: Vec<i32>) -> Vec<i32> {
 }
 ```
 
+### *[147. Insertion Sort List](https://leetcode.com/problems/insertion-sort-list/submissions/)
+
+```rust
+pub fn insertion_sort_list(head: Option<Box<ListNode>>) -> Option<Box<ListNode>> {
+    head.map(|mut head| {
+        let mut curr = head.as_mut() as *mut ListNode;
+        unsafe {
+            while let Some(curr_next) = (*curr).next.as_mut() {
+                if curr_next.val < head.val {
+                    std::mem::swap(&mut curr_next.val, &mut head.val);
+                }
+                curr = curr_next.as_mut() as *mut ListNode;
+            }
+        }
+        Box::new(ListNode {
+            val: head.val,
+            next: Solution::insertion_sort_list(head.next),
+        })
+    })
+}
+```
+
 ### [271. Contains Duplicate](https://leetcode.com/problems/contains-duplicate/)
 
 ```rust
