@@ -1,6 +1,44 @@
 # rust-leetcode-oneliner
 
-Elegent one-liner solutions to leetcode problems using iterators
+My one-liner solutions to leetcode problems using iterators.
+
+These solutions aren't necessarily efficient, but they are fun! They also serve as good demonstrations of the use of rust iterators.
+
+
+### [66. Plus One](https://leetcode.com/problems/plus-one/)
+
+```rust
+
+pub fn plus_one(digits: Vec<i32>) -> Vec<i32> {
+    digits
+        .iter()
+        .rev()
+        .skip(1)
+        .chain(std::iter::once(&0i32))
+        .fold(
+            (
+                vec![(digits[digits.len() - 1] + 1) % 10],
+                digits[digits.len() - 1] == 9,
+            ),
+            |(mut acc, carry), curr| {
+                let mut curr = if carry { *curr + 1 } else { *curr };
+                let carry = if curr == 10 {
+                    curr = 0;
+                    true
+                } else {
+                    false
+                };
+                acc.push(curr);
+                (acc, carry)
+            },
+        )
+        .0
+        .into_iter()
+        .rev()
+        .skip_while(|&x| x == 0)
+        .collect()
+}
+```
 
 ### [884. Uncommon Words from Two Sentences](https://leetcode.com/problems/uncommon-words-from-two-sentences/)
 
