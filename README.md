@@ -11,6 +11,7 @@ These solutions aren't necessarily efficient, but they are fun! They also serve 
   - [*147. Insertion Sort List](#147-insertion-sort-list)
   - [271. Contains Duplicate](#271-contains-duplicate)
   - [884. Uncommon Words from Two Sentences](#884-uncommon-words-from-two-sentences)
+  - [1446. Consecutive Characters](#1446-consecutive-characters)
 - [Implementing `Iterator` (not really one-liner)](#implementing-iterator-not-really-one-liner)
   - [17. Letter Combinations of a Phone Number](#17-letter-combinations-of-a-phone-number)
   - [885. Spiral Matrix III](#885-spiral-matrix-iii)
@@ -56,13 +57,13 @@ pub fn plus_one(digits: Vec<i32>) -> Vec<i32> {
 ```rust
 pub fn insertion_sort_list(head: Option<Box<ListNode>>) -> Option<Box<ListNode>> {
     head.map(|mut head| {
-        let mut curr = head.as_mut() as *mut ListNode;
+        let mut next_node = &mut head.next as *mut Option<Box<ListNode>>;
         unsafe {
-            while let Some(curr_next) = (*curr).next.as_mut() {
-                if curr_next.val < head.val {
-                    std::mem::swap(&mut curr_next.val, &mut head.val);
+            while let Some(ref mut node) = *next_node {
+                if node.val < head.val {
+                    std::mem::swap(&mut node.val, &mut head.val);
                 }
-                curr = curr_next.as_mut() as *mut ListNode;
+                next_node = &mut node.next as *mut Option<Box<ListNode>>;
             }
         }
         Box::new(ListNode {
@@ -127,6 +128,20 @@ pub fn uncommon_from_sentences(a: String, b: String) -> Vec<String> {
             }
             v
         })
+}
+```
+
+### [1446. Consecutive Characters](https://leetcode.com/problems/consecutive-characters/)
+
+```rust
+pub fn max_power(s: String) -> i32 {
+    s.as_bytes()
+        .windows(2)
+        .fold((1, 1), |(curr, max), win| {
+            let curr = if win[0] == win[1] { curr + 1 } else { 1 };
+            (curr, std::cmp::max(curr, max))
+        })
+        .1
 }
 ```
 
