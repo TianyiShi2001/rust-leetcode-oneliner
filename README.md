@@ -7,14 +7,15 @@ These solutions aren't necessarily efficient, but they are fun! They also serve 
 ## TOC
 - [TOC](#toc)
 - [Oneliners](#oneliners)
-  - [66. Plus One](#66-plus-one)
-  - [*147. Insertion Sort List](#147-insertion-sort-list)
-  - [271. Contains Duplicate](#271-contains-duplicate)
-  - [884. Uncommon Words from Two Sentences](#884-uncommon-words-from-two-sentences)
-  - [1446. Consecutive Characters](#1446-consecutive-characters)
+  - [66. Plus One](#66-plus-onehttpsleetcodecomproblemsplus-one)
+  - [*147. Insertion Sort List](#147-insertion-sort-listhttpsleetcodecomproblemsinsertion-sort-listsubmissions)
+  - [271. Contains Duplicate](#271-contains-duplicatehttpsleetcodecomproblemscontains-duplicate)
+  - [275. H-Index II](#275-h-index-iihttpsleetcodecomproblemsh-index-ii)
+  - [884. Uncommon Words from Two Sentences](#884-uncommon-words-from-two-sentenceshttpsleetcodecomproblemsuncommon-words-from-two-sentences)
+  - [1446. Consecutive Characters](#1446-consecutive-charactershttpsleetcodecomproblemsconsecutive-characters)
 - [Implementing `Iterator` (not really one-liner)](#implementing-iterator-not-really-one-liner)
-  - [17. Letter Combinations of a Phone Number](#17-letter-combinations-of-a-phone-number)
-  - [885. Spiral Matrix III](#885-spiral-matrix-iii)
+  - [17. Letter Combinations of a Phone Number](#17-letter-combinations-of-a-phone-numberhttpsleetcodecomproblemsletter-combinations-of-a-phone-number)
+  - [885. Spiral Matrix III](#885-spiral-matrix-iiihttpsleetcodecomproblemsspiral-matrix-iii)
 
 ## Oneliners
 
@@ -108,6 +109,23 @@ pub fn contains_duplicate(nums: Vec<i32>) -> bool {
             }
         })
         .is_none()
+```
+
+### [275. H-Index II](https://leetcode.com/problems/h-index-ii/)
+
+```rust
+pub fn h_index(citations: Vec<i32>) -> i32 {
+    citations.into_iter().rev().
+        fold(0, |h, cit| { if cit > h { h + 1 } else { h } })
+}
+```
+
+```rust
+pub fn h_index(citations: Vec<i32>) -> i32 {
+    citations.into_iter().rev().
+        try_fold(0, |h, cit| if cit > h { Ok(h + 1) } else { Err (h) } ).
+        unwrap_or_else(|h| h )
+}
 ```
 
 ### [884. Uncommon Words from Two Sentences](https://leetcode.com/problems/uncommon-words-from-two-sentences/)
