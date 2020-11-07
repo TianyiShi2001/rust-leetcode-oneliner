@@ -7,6 +7,7 @@ These solutions aren't necessarily efficient, but they are fun! They also serve 
 ## TOC
 - [TOC](#toc)
 - [Oneliners](#oneliners)
+  - [58. Length of Last Word](#58-length-of-last-word)
   - [66. Plus One](#66-plus-one)
   - [*147. Insertion Sort List](#147-insertion-sort-list)
   - [271. Contains Duplicate](#271-contains-duplicate)
@@ -17,6 +18,17 @@ These solutions aren't necessarily efficient, but they are fun! They also serve 
   - [885. Spiral Matrix III](#885-spiral-matrix-iii)
 
 ## Oneliners
+
+### [58. Length of Last Word](https://leetcode.com/problems/length-of-last-word/submissions/)
+
+```rust
+pub fn length_of_last_word(s: String) -> i32 {
+    s.split_ascii_whitespace()
+        .last()
+        .map(|s| s.len() as i32)
+        .unwrap_or(0)
+}
+```
 
 ### [66. Plus One](https://leetcode.com/problems/plus-one/)
 
