@@ -12,6 +12,7 @@ These solutions aren't necessarily efficient, but they are fun! They also serve 
   - [*147. Insertion Sort List](#147-insertion-sort-list)
   - [271. Contains Duplicate](#271-contains-duplicate)
   - [275. H-Index II](#275-h-index-ii)
+  - [832. Flipping an Image](#832-flipping-an-image)
   - [884. Uncommon Words from Two Sentences](#884-uncommon-words-from-two-sentences)
   - [1446. Consecutive Characters](#1446-consecutive-characters)
 - [Implementing `Iterator` (not really one-liner)](#implementing-iterator-not-really-one-liner)
@@ -137,6 +138,17 @@ pub fn h_index(citations: Vec<i32>) -> i32 {
     citations.into_iter().rev().
         try_fold(0, |h, cit| if cit > h { Ok(h + 1) } else { Err (h) } ).
         unwrap_or_else(|h| h )
+}
+```
+
+### [832. Flipping an Image](https://leetcode.com/problems/flipping-an-image)
+
+
+```rust
+pub fn flip_and_invert_image(a: Vec<Vec<i32>>) -> Vec<Vec<i32>> {
+    a.into_iter()
+        .map(|row| row.into_iter().rev().map(|x| 1 - x).collect::<Vec<_>>())
+        .collect()
 }
 ```
 
