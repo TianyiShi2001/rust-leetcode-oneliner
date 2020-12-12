@@ -12,6 +12,7 @@ These solutions aren't necessarily efficient, but they are fun! They also serve 
   - [*147. Insertion Sort List](#147-insertion-sort-list)
   - [271. Contains Duplicate](#271-contains-duplicate)
   - [275. H-Index II](#275-h-index-ii)
+  - [766. Toeplitz Matrix](#766-toeplitz-matrix)
   - [832. Flipping an Image](#832-flipping-an-image)
   - [884. Uncommon Words from Two Sentences](#884-uncommon-words-from-two-sentences)
   - [1446. Consecutive Characters](#1446-consecutive-characters)
@@ -141,6 +142,16 @@ pub fn h_index(citations: Vec<i32>) -> i32 {
 }
 ```
 
+### [766. Toeplitz Matrix](https://leetcode.com/problems/toeplitz-matrix/)
+
+```rust
+pub fn is_toeplitz_matrix(matrix: Vec<Vec<i32>>) -> bool {
+    matrix
+        .windows(2)
+        .all(|win| &win[0][0..win[0].len() - 1] == &win[1][1..win[1].len()])
+}
+```
+
 ### [832. Flipping an Image](https://leetcode.com/problems/flipping-an-image)
 
 
@@ -149,7 +160,6 @@ pub fn flip_and_invert_image(a: Vec<Vec<i32>>) -> Vec<Vec<i32>> {
     a.into_iter()
         .map(|row| row.into_iter().rev().map(|x| 1 - x).collect::<Vec<_>>())
         .collect()
-}
 ```
 
 ### [884. Uncommon Words from Two Sentences](https://leetcode.com/problems/uncommon-words-from-two-sentences/)
